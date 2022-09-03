@@ -1,0 +1,84 @@
+<!--<app-header></app-header>-->
+<section class="h-100 py-5">
+  <div class="container h-100">
+    <div class="row justify-content-sm-center h-100">
+      <div class="col-xxl-10">
+          <div class="card shadow-lg">
+            <div class="row card-body p-5">
+            <div class="col-lg-6">
+              <h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
+              <form method="POST"  [formGroup]="signInFormGroup" (ngSubmit)="onSignIn()" novalidate="" autocomplete="off">
+                <div class="mb-3">
+                  <label class="mb-2 text-muted" for="email">Email Address</label>
+                  <input id="email" type="email"
+                         class="form-control"
+                         name="email"
+                         formControlName="email"
+                         [ngClass]="{'is-invalid': email.invalid && (email.touched || email.dirty || isSubmitted)}"
+                         autofocus>
+                  <div class="invalid-feedback" *ngIf="email.invalid && (email.touched || email.dirty || isSubmitted)">
+                    <div *ngIf="email.errors.required">
+                      Email address is required !
+                    </div>
+                    <div *ngIf="email.errors.email">
+                      Email address is invalid !
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <div class="mb-2 w-100">
+                    <label class="text-muted" for="password">Password</label>
+                  </div>
+                  <input id="password" type="password"
+                         class="form-control"
+                         name="password"
+                         formControlName="password"
+                         [ngClass]="{'is-invalid': password.invalid && (password.touched || password.dirty || isSubmitted)}"
+                         required>
+                  <div class="invalid-feedback" *ngIf="password.invalid && (password.touched || password.dirty || isSubmitted)">
+                    <div *ngIf="password.errors.required">
+                      Password is required !
+                    </div>
+                    <div *ngIf="password.errors.minlength">
+                      Password is at least 8 characters long !
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <div class="mb-2 w-100">
+                    <label class="text-muted"></label>
+                    <a [routerLink]="'/auth/forgot-password'" class="float-end">
+                      Forgot Password?
+                    </a>
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary ms-auto w-50">
+                    Login
+                  </button>
+
+                </div>
+              </form>
+            </div>
+              <div class="col-lg-6">
+                <img src="../../../../assets/images/auth/sign-in.webp"
+                     class="img-fluid" alt="Sample image">
+              </div>
+
+             </div>
+            <div class="card-footer py-3 border-0">
+              <div class="text-center">
+                Don't have an account? <a [routerLink]="'/auth/sign-up'" class="text-dark">Create One</a>
+              </div>
+            </div>
+          </div>
+        <div class="text-center mt-5 text-muted">
+          Copyright &copy; 2017-2021 &mdash; Your Company
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,43 @@
+<form class="w-75" [formGroup]="postFormGroup" (ngSubmit)="onSubmitPost()">
+
+  <h2 class="mb-3">
+    {{isUpdatePost ? 'Update post':'Create new post'}}
+  </h2>
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" class="form-control" id="title" formControlName="title"
+    [ngClass]="{'is-invalid': title.invalid && (title.touched || title.dirty || isSubmitted)}">
+    <div class="invalid-feedback" *ngIf="title.invalid && (title.touched || title.dirty || isSubmitted)">
+      Post title is required !
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="image" class="form-label">Image (URL)</label>
+    <input type="text" class="form-control" id="image" formControlName="image"
+           [ngClass]="{'is-invalid': image.invalid && (image.touched || image.dirty || isSubmitted)}">
+    <div class="invalid-feedback" *ngIf="image.invalid && (image.touched || image.dirty || isSubmitted)">
+      Post image is required !
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="category" class="form-label">Category</label>
+    <ng-select [items]="categories?.results" id="category" formControlName="category_id"
+               [ngClass]="{'is-invalid': category_id.invalid && (category_id.touched || category_id.dirty || isSubmitted)}"
+               bindLabel="category_name"
+               bindValue="category_id">
+    </ng-select>
+    <div class="invalid-feedback" *ngIf="category_id.invalid && (category_id.touched || category_id.dirty || isSubmitted)">
+      Post category is required !
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="content" class="form-label">Post content</label>
+    <textarea  class="form-control"  id="content" formControlName="content"
+               [ngClass]="{'is-invalid': content.invalid && (content.touched || content.dirty || isSubmitted)}">
+    </textarea>
+    <div class="invalid-feedback" *ngIf="content.invalid && (content.touched || content.dirty || isSubmitted)">
+      Post content is required !
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
