@@ -27,6 +27,9 @@ export const environment = {
     articles:{
       create: `${baseUrl}/articles/add`,
       update: `${baseUrl}/articles/`,
+    },
+    comments: {
+      create: `${baseUrl}/comments/add`
     }
   }
 };

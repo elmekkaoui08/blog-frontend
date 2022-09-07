@@ -31,4 +31,8 @@ export class PostsService {
   deletePost(post_id: number){
     return this.httpClient.delete(environment.api.posts.retrieveUpdateDelete+post_id);
   }
+
+  getPostDetail(post_id: number){
+    return this.httpClient.get<PostModel>(environment.api.posts.retrieveUpdateDelete+post_id);
+  }
 }

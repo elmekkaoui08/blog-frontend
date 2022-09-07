@@ -6,6 +6,7 @@ import {map, Observable} from "rxjs";
 import jwt_decode from "jwt-decode";
 import {Router} from "@angular/router";
 import {AppRouting} from "../../../environments/appRouting";
+import {ToastrService} from "ngx-toastr";
 
 
 
@@ -19,12 +20,14 @@ export class AuthService {
   isMember: boolean = false;
 
   constructor(private httpClient: HttpClient,
-              private _router: Router) { }
+              private _router: Router,
+              private _toastrService: ToastrService) { }
 
   onLogIn(credentials: {email: string, password: string}): Observable<number>{
     return this.httpClient.post(environment.api.auth.login, credentials).pipe(
       map(data =>{
         this.setTokensToLS({access_token: data['access'], refresh_token: data['refresh']});
+        // this.tokenExpired(data['access']);
         return jwt_decode(data['access'])['user_id'];
       })
     );
@@ -37,6 +40,20 @@ export class AuthService {
 
   isUserLoggedIn(){
     return !!localStorage.getItem('access_token');
+
+  }
+
+  tokenExpired(token: string) {
+    const access_token = jwt_decode(token)
+    const expiration_date = new Date(0);
+    const now = new Date();
+    expiration_date.setUTCSeconds(access_token['exp']);
+    const expiresAt = Math.abs((expiration_date.getTime() - now.getTime()))
+    console.log('Expire at: ', expiresAt);
+    setTimeout(()=>{
+      this._toastrService.info('Session expires')
+      this.signOut();
+    }, expiresAt)
 
   }
 

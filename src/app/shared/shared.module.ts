@@ -16,6 +16,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
+import { PostDetailsComponent } from './posts/post-details/post-details.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ConfirmationModalComponent } from './components/confirmation-modal/conf
     ForgotPasswordComponent,
     ResetPasswordComponent,
     AddEditPostComponent,
-    ConfirmationModalComponent
+    ConfirmationModalComponent,
+    PostDetailsComponent
   ],
   exports: [
     HeaderComponent,

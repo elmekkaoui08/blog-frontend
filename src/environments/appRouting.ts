@@ -10,7 +10,8 @@ export const AppRouting = {
     dashboard: `${AUTHOR}/dashboard`
   },
   public: {
-    home: '/'
+    home: '/',
+    posts: '/posts/'
   },
   auth: {
     signIn: `${AUTH}/sign-in`,

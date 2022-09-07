@@ -4,6 +4,7 @@ import {SignInComponent} from "./authentication/sign-in/sign-in.component";
 import {SignUpComponent} from "./authentication/sign-up/sign-up.component";
 import {ForgotPasswordComponent} from "./authentication/forgot-password/forgot-password.component";
 import {ResetPasswordComponent} from "./authentication/reset-password/reset-password.component";
+import {PostDetailsComponent} from "./posts/post-details/post-details.component";
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'auth/reset-password',
     component: ResetPasswordComponent
+  },
+  {
+    path: 'posts/:id',
+    component: PostDetailsComponent
   },
 ];
 

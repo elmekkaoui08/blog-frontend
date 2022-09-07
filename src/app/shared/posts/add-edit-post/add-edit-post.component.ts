@@ -8,6 +8,7 @@ import {ArticlesService} from "../../services/articles.service";
 import {ArticleModel} from "../../models/article.model";
 import {ToastrService} from "ngx-toastr";
 import {errorMessages} from "../../../../environments/error-messages";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-add-edit-post',
@@ -26,6 +27,7 @@ export class AddEditPostComponent implements OnInit {
   constructor(private categoryService: CategoriesService,
               private _formBuilder: FormBuilder,
               private _articleService: ArticlesService,
+              private _authService: AuthService,
               private _toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -44,7 +46,8 @@ export class AddEditPostComponent implements OnInit {
 
   initPostFormGroup(){
     this.postFormGroup = this._formBuilder.group({
-      article_id:[this.selectedPost.article.article_id],
+      article_id:this.isUpdatePost ? [this.selectedPost.article.article_id]: [],
+      user_id: this._authService.getConnectedUser().id,
       title:['', Validators.required],
       image: ['', Validators.required],
       category_id: [1, Validators.required],
