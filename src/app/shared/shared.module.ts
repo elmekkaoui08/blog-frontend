@@ -29,7 +29,7 @@ import { PostDetailsComponent } from './posts/post-details/post-details.componen
     ResetPasswordComponent,
     AddEditPostComponent,
     ConfirmationModalComponent,
-    PostDetailsComponent
+    PostDetailsComponent,
   ],
   exports: [
     HeaderComponent,

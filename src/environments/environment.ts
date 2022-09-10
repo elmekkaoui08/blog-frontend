@@ -19,6 +19,9 @@ export const environment = {
     },
     users: {
       details: `${baseUrl}/users/`,
+      list: `${baseUrl}/users`,
+      create: `${baseUrl}/users/add`,
+      deleteUser: `${baseUrl}/users/`,
     },
     categories:{
       list: `${baseUrl}/categories`,

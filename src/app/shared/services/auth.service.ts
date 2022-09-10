@@ -74,6 +74,7 @@ export class AuthService {
    return this.httpClient.post(environment.api.auth.forgotPassword, {email: email});
   }
 
+
   createUser(data: any){
     return this.httpClient.post(environment.api.auth.createUser, data);
   }

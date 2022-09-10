@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validator, Validators} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {ToastrService} from "ngx-toastr";
-import {environment} from "../../../../environments/environment";
 import {errorMessages} from "../../../../environments/error-messages";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {AppRoles} from "../../models/role.model";
 import {Router} from "@angular/router";
 import {AppRouting} from "../../../../environments/appRouting";
@@ -56,6 +54,7 @@ export class SignInComponent implements OnInit {
   }
 
   private navigateUser(role: string){
+    console.log('User Role: ', role)
     switch (role){
       case AppRoles.ADMIN:
         this._router.navigateByUrl(AppRouting.admin.dashboard);
