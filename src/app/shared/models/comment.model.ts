@@ -3,9 +3,9 @@ import {ArticleModel} from './article.model';
 
 export interface CommentModel{
   comment_id: number
-  content: string
-  image: any
-  member: MemberModel
-  article: ArticleModel
+  comment: string
+  user_name: string
+  email: string
+  post_id: number
 
 }

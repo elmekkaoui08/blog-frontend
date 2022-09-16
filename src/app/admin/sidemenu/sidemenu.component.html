@@ -7,26 +7,23 @@
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
       <a href="javascrip:void(0)"  class="nav-link text-white" [routerLink]="'/admin/dashboard'" [routerLinkActive]="'active'" aria-current="page">
-        <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
         Dashboard
       </a>
     </li>
     <li>
-      <a href="javascrip:void(0)" [routerLink]="'/admin/list-authors'"  [routerLinkActive]="'active'" class="nav-link text-white">
-        <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+      <a href="javascrip:void(0)" [routerLink]="'/admin/list-admins'"   [routerLinkActive]="'active'" class="nav-link text-white">
+        Admins
+      </a>
+    </li>
+    <li>
+      <a href="javascrip:void(0)" [routerLink]="'/admin/list-authors'" [routerLinkActive]="'active'" class="nav-link text-white">
         Authors
       </a>
     </li>
     <li>
-      <a href="javascrip:void(0)"  class="nav-link text-white" [routerLinkActive]="'active'" >
-        <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+      <a href="javascrip:void(0)"  [routerLink]="'/admin/list-members'" class="nav-link text-white" [routerLinkActive]="'active'" >
+<!--        <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>-->
         Members
-      </a>
-    </li>
-    <li>
-      <a href="#" class="nav-link text-white">
-        <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-        Parameters
       </a>
     </li>
   </ul>

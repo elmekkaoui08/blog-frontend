@@ -9,6 +9,8 @@ import {AppRouting} from "../../../../environments/appRouting";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {CommentsService} from "../../services/comments.service";
+import {DomSanitizer} from "@angular/platform-browser";
+import {CommentModel} from "../../models/comment.model";
 
 @Component({
   selector: 'app-post-details',
@@ -19,6 +21,7 @@ export class PostDetailsComponent implements OnInit {
 
   post_id: number;
   post: PostModel;
+  comments: CommentModel[];
   latestPosts: CommonResponse<PostModel>;
   readonly AppRouting = AppRouting;
   comment: string;
@@ -31,6 +34,7 @@ export class PostDetailsComponent implements OnInit {
               private authService: AuthService,
               private formBuilder:FormBuilder,
               private commentService: CommentsService,
+              private sanitizer: DomSanitizer
 ) { }
 
   ngOnInit(): void {
@@ -40,17 +44,20 @@ export class PostDetailsComponent implements OnInit {
 
     this._route.paramMap.subscribe(paramsAsMap => {
       this.post_id = +paramsAsMap['params']['id']
-      this.getPostDetails(this.post_id)
+      this.getPostDetails(this.post_id);
+      this.onLoadListComments(this.post_id);
     });
 
     this.commentForm = this.formBuilder.group({
-      user_id: [],
-      article_id: [],
+      user_name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      post_id: [this.post_id],
       comment: ['', [Validators.required]]
     })
   }
 
   onAddComment(){
+    console.log('Adding comment')
     this.submitted = true;
     if(this.commentForm.valid){
       this.commentForm.patchValue({
@@ -58,7 +65,8 @@ export class PostDetailsComponent implements OnInit {
         article_id: this.post.article.article_id,
       })
       this.commentService.createComment(this.commentForm.value).subscribe(value => {
-
+      this.comments.push(this.commentForm.value);
+      this.commentForm.reset();
       }, error => {
         this.toastrService.error(errorMessages.SERVER_EXCEPTION_500)
       })
@@ -75,6 +83,12 @@ export class PostDetailsComponent implements OnInit {
     })
   }
 
+  onLoadListComments(post_id: number){
+    this.commentService.listCommentByPost(post_id).subscribe(value => {
+      console.log(value);
+      this.comments = value;
+    })
+  }
 
   getLatestPost(){
     this.postService.getAllPosts().subscribe(value => {
@@ -82,5 +96,9 @@ export class PostDetailsComponent implements OnInit {
     }, error => {
       this.toastrService.error(errorMessages.SERVER_EXCEPTION_500)
     })
+  }
+
+  getImage(image) {
+    return this.sanitizer.bypassSecurityTrustUrl('data:image/png;base64,'+image);
   }
 }

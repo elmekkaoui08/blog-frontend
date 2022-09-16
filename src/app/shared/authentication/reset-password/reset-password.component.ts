@@ -17,6 +17,7 @@ export class ResetPasswordComponent implements OnInit {
   private token: string;
   public formGroup: FormGroup;
   public isSubmitted: boolean = false;
+  public isNewPassword: boolean = false;
   public readonly AppRouting = AppRouting;
   constructor(private authService: AuthService,
               private _toastrService: ToastrService,
@@ -25,6 +26,9 @@ export class ResetPasswordComponent implements OnInit {
               private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    if(this._router.url.includes('new-password'))
+      this.isNewPassword = true;
+
     this.token = this._route.snapshot.queryParams['token'];
     this.formGroup = this._formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(8)]],

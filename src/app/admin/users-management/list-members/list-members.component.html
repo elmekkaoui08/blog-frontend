@@ -1,0 +1,211 @@
+
+
+<div class="container-fluid mt-5">
+  <div class="d-flex justify-content-end py-4">
+    <button class="btn btn-dark" (click)="openModal(addEditModal, 'modal-lg', null)">
+      <span> <i class="fa-sharp fa-solid fa-user-plus"></i> Add User </span>
+    </button>
+  </div>
+
+  <table class="table table-dark" *ngIf="authors">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First name</th>
+      <th scope="col">Last name</th>
+      <th scope="col">Date of birth</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Email</th>
+      <th scope="col">Role</th>
+      <th scope="col">Status</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let author of authors.results">
+      <th scope="row">{{author.id}}</th>
+      <td>{{author.first_name}}</td>
+      <td>{{author.last_name}}</td>
+      <td>{{author.date_of_birth}}</td>
+      <td>{{author.phone}}</td>
+      <td>{{author.email}}</td>
+      <td>{{author.role.role_name}}</td>
+      <td>
+        <span class="badge" [ngClass]="author.is_blocked ? 'bg-danger':'bg-success'">{{author.is_blocked ? 'Disabled':'Enabled'}}</span>
+      </td>
+      <td>
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button  mat-menu-item (click)="onEditAuthor(addEditModal, author)">
+            <mat-icon color="primary" >visibility</mat-icon>
+            <span>Details</span>
+          </button>
+          <button  mat-menu-item>
+            <mat-icon color="warn">block</mat-icon>
+            <span>Block</span>
+          </button>
+          <button mat-menu-item (click)="openModal(deleteModal,'', author)">
+            <mat-icon color="accent">restore_from_trash</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<ng-template #addEditModal>
+
+
+  <div tabindex="-1">
+
+    <div class="modal-header">
+      <h2 class="modal-title">{{isUpdate ? 'Update member':'Create new member'}}</h2>
+      <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+    <div class="modal-dialog">
+      <div class="modal-body">
+        <form [formGroup]="addEditForm" >
+
+
+          <div class="mb-3">
+            <label class="mb-2 text-muted" for="first-name">
+              First name
+            </label>
+            <input id="first-name" type="text" class="form-control" name="first-name"
+                   formControlName="first_name"
+                   [ngClass]="{'is-invalid': first_name.invalid && (first_name.dirty || first_name.touched || isSubmitted)}"
+            >
+            <div class="invalid-feedback" *ngIf="first_name.invalid && (first_name.dirty || first_name.touched || isSubmitted)">
+              <div  *ngIf="first_name.errors.required">
+                First name is required !
+              </div>
+              <div  *ngIf="first_name.errors.minlength">
+                First name is at least 5 characters long !
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="mb-2 text-muted" for="last-name">Last name</label>
+            <input id="last-name" type="text" class="form-control" name="last-name"
+                   formControlName="last_name"
+                   [ngClass]="{'is-invalid': last_name.invalid && (last_name.dirty || last_name.touched || isSubmitted)}"
+            >
+
+            <div class="invalid-feedback" *ngIf="last_name.invalid && (last_name.dirty || last_name.touched || isSubmitted)">
+              <div  *ngIf="last_name.errors.required">
+                Last name is required !
+              </div>
+              <div  *ngIf="last_name.errors.minlength">
+                Last name is at least 5 characters long !
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="mb-2 text-muted" for="date-of-birth">Date of birth</label>
+            <input id="date-of-birth" type="date" class="form-control"
+                   formControlName="date_of_birth"
+                   [ngClass]="{'is-invalid': date_of_birth.invalid && (date_of_birth.dirty || date_of_birth.touched || isSubmitted)}"
+                   name="date-of-birth" >
+
+            <div class="invalid-feedback" *ngIf="date_of_birth.invalid && (date_of_birth.dirty || date_of_birth.touched || isSubmitted)">
+              <div  *ngIf="date_of_birth.errors.required">
+                Date of birth is required !
+              </div>
+              <div  *ngIf="date_of_birth.errors.younger">
+                Your age doesn't meet our standards !
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="mb-2 text-muted" for="phone">Phone</label>
+            <input id="phone" type="text" class="form-control"
+                   formControlName="phone"
+                   [ngClass]="{'is-invalid': phone.invalid && (phone.dirty || phone.touched || isSubmitted)}"
+                   name="phone" >
+            <div class="invalid-feedback" *ngIf="phone.invalid && (phone.dirty || phone.touched || isSubmitted)">
+              <div  *ngIf="phone.errors.required">
+                Phone is required !
+              </div>
+              <div  *ngIf="phone.errors.pattern">
+                Phone is invalid !
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="mb-2 text-muted" for="email">Email address</label>
+            <input id="email" type="email" class="form-control" name="email" value="" [readOnly]="isUpdate"
+                   formControlName="email"
+                   [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched || isSubmitted)}"
+                   required>
+            <div class="invalid-feedback" *ngIf="email.invalid && (email.dirty || email.touched || isSubmitted)">
+              <div  *ngIf="email.errors.required">
+                Email is required !
+              </div>
+              <div  *ngIf="email.errors.email">
+                Email is invalid !
+              </div>
+            </div>
+          </div>
+
+
+
+
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+
+      <button type="button" class="btn btn-secondary" (click)="closeModal()" >Close</button>
+      <!--        <button type="button" class="btn btn-primary">Save changes</button>-->
+      <button type="submit" class="btn btn-primary" *ngIf="!isSubmitting" (click)="onUpdateAddAuthor()">
+        {{isUpdate ? 'Update member': 'Create account'}}
+      </button>
+
+      <button class="btn btn-primary " type="button" disabled *ngIf="isSubmitting">
+        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+        {{isUpdate ? 'Updating':'Creating'}} account...
+      </button>
+    </div>
+  </div>
+
+</ng-template>
+
+<ng-template #deleteModal>
+
+
+  <div tabindex="-1">
+
+    <div class="modal-header">
+      <h2 class="modal-title">{{isUpdate ? 'Update member':'Create new member'}}</h2>
+      <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+    </div>
+    <div class="modal-dialog">
+      <div class="modal-body">
+        Your about to delete a user, are you sure you want to continue ?
+      </div>
+    </div>
+    <div class="modal-footer">
+
+      <button type="button" class="btn btn-secondary" (click)="closeModal()" >Cancel</button>
+      <!--        <button type="button" class="btn btn-primary">Save changes</button>-->
+      <button type="submit" class="btn btn-danger" (click)="onDeleteUser()">
+        Continue
+      </button>
+
+    </div>
+  </div>
+
+</ng-template>
+
+

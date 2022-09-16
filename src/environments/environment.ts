@@ -32,7 +32,8 @@ export const environment = {
       update: `${baseUrl}/articles/`,
     },
     comments: {
-      create: `${baseUrl}/comments/add`
+      create: `${baseUrl}/comments/add`,
+      list: `${baseUrl}/comments`,
     }
   }
 };

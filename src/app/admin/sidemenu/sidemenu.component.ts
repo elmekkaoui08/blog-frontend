@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AppRoles} from "../../shared/models/role.model";
 
 @Component({
   selector: 'app-sidemenu',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidemenuComponent implements OnInit {
 
+  readonly AppRoles: AppRoles;
   constructor() { }
 
   ngOnInit(): void {

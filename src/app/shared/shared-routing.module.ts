@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'posts/:id',
     component: PostDetailsComponent
   },
+  {
+    path: 'auth/new-password',
+    component: ResetPasswordComponent
+  }
 ];
 
 @NgModule({

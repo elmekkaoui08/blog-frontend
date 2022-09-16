@@ -9,6 +9,7 @@ import {ArticleModel} from "../../models/article.model";
 import {ToastrService} from "ngx-toastr";
 import {errorMessages} from "../../../../environments/error-messages";
 import {AuthService} from "../../services/auth.service";
+import {UtilitiesService} from "../../utilities/utilities.service";
 
 @Component({
   selector: 'app-add-edit-post',
@@ -28,7 +29,8 @@ export class AddEditPostComponent implements OnInit {
               private _formBuilder: FormBuilder,
               private _articleService: ArticlesService,
               private _authService: AuthService,
-              private _toastr: ToastrService) { }
+              private _toastr: ToastrService,
+              private utilitiesService: UtilitiesService) { }
 
   ngOnInit(): void {
     this.onLoadCategories()
@@ -49,9 +51,10 @@ export class AddEditPostComponent implements OnInit {
       article_id:this.isUpdatePost ? [this.selectedPost.article.article_id]: [],
       user_id: this._authService.getConnectedUser().id,
       title:['', Validators.required],
-      image: ['', Validators.required],
+      image_name: ['', Validators.required],
       category_id: [1, Validators.required],
       content: ['', Validators.required],
+      image: ['', Validators.required]
     })
   }
 
@@ -82,11 +85,33 @@ export class AddEditPostComponent implements OnInit {
     })
   }
 
+  handleFileSelect(evt){
+    let files = evt.target.files;
+    let file = files[0];
+
+    if (files && file) {
+      // this.image.setValue('');
+      let reader = new FileReader();
+      reader.onload =this._handleReaderLoaded.bind(this);
+      reader.readAsBinaryString(file);
+    }
+  }
+
+
+
+  _handleReaderLoaded(readerEvt) {
+    let binaryString = readerEvt.target.result;
+    // this.base64textString= btoa(binaryString);
+    this.postFormGroup.patchValue({
+      image: btoa(binaryString)
+    })
+  }
+
   get title(){
     return this.postFormGroup.get('title');
   }
-   get image(){
-    return this.postFormGroup.get('image');
+   get image_name(){
+    return this.postFormGroup.get('image_name');
   }
    get category_id(){
     return this.postFormGroup.get('category_id');

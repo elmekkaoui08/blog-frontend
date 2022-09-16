@@ -1,19 +1,19 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {CommonResponse} from "../../../shared/utilities/common-response";
 import {UserModel} from "../../../shared/models/user.model";
 import {UsersService} from "../../../shared/services/users.service";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthorModel} from "../../../shared/models/author.model";
 import {ToastrService} from "ngx-toastr";
 import {errorMessages} from "../../../../environments/error-messages";
 
 @Component({
-  selector: 'app-list-authors',
-  templateUrl: './list-authors.component.html',
-  styleUrls: ['./list-authors.component.scss']
+  selector: 'app-list-members',
+  templateUrl: './list-members.component.html',
+  styleUrls: ['./list-members.component.scss']
 })
-export class ListAuthorsComponent implements OnInit {
+export class ListMembersComponent implements OnInit {
+
 
   addEditForm: FormGroup;
   isSubmitted: boolean = false;
@@ -29,12 +29,12 @@ export class ListAuthorsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initAddEditForm();
-    this.onLoadListPosts();
+    this.onLoadListUsers();
   }
 
 
-  onLoadListPosts(){
-    this.usersService.listAuthors().subscribe(value => {
+  onLoadListUsers(){
+    this.usersService.listUsersByType(3).subscribe(value => {
       this.authors = value;
     })
   }
@@ -129,7 +129,7 @@ export class ListAuthorsComponent implements OnInit {
       date_of_birth: ['', [Validators.required]],
       phone: ['', [Validators.required, Validators.pattern('(([+][(]?[0-9]{1,3}[)]?)|([(]?[0-9]{4}[)]?))\s*[)]?[-\s\.]?[(]?[0-9]{1,3}[)]?([-\s\.]?[0-9]{3})([-\s\.]?[0-9]{3,4})')]],
       email: ['', [Validators.required, Validators.email]],
-      role_id: 2,
+      role_id: 3,
     })
   }
 
@@ -148,4 +148,5 @@ export class ListAuthorsComponent implements OnInit {
   get email(){
     return this.addEditForm.get('email')
   }
+
 }

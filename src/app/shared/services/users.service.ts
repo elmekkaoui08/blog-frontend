@@ -11,8 +11,8 @@ export class UsersService {
 
   constructor(private httpClient: HttpClient) { }
 
-  listAuthors(){
-    return this.httpClient.get<CommonResponse<UserModel>>(environment.api.users.list+'?authors=true')
+  listUsersByType(userType: number){
+    return this.httpClient.get<CommonResponse<UserModel>>(environment.api.users.list+'?user_type='+userType)
   }
 
   updateUser(user: any){

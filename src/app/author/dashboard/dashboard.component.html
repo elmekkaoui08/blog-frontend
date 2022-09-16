@@ -3,7 +3,7 @@
 <div class="row d-flex justify-content-around">
   <button type="button" (click)="isAddingPost = !isAddingPost" class="btn btn-primary btn-lg btn-block mb-2">{{isAddingPost ? 'List of posts':'Add a new post'}}</button>
 </div>
-<div class=" container row d-flex justify-content-around">
+<div class=" container  d-flex justify-content-around">
 <!--  <app-sidemenu class="col-md-1"></app-sidemenu>-->
 
   <app-post-list *ngIf="!isAddingPost" [posts]="authorPosts" (editPost)="onEditPost($event)"></app-post-list>

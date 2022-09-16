@@ -11,6 +11,8 @@ import {
 import {PostsService} from "../../services/posts.service";
 import {ToastrService} from "ngx-toastr";
 import {errorMessages} from "../../../../environments/error-messages";
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-post-list',
@@ -26,11 +28,13 @@ export class PostListComponent implements OnInit {
   constructor(public authService: AuthService,
               public dialog: MatDialog,
               private _postService: PostsService,
-              private _toastr: ToastrService) { }
+              private _toastr: ToastrService,
+              private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.isAuthor = this.authService.getConnectedUserRole() == AppRoles.AUTHOR;
     console.log('service: ', this.authService.getConnectedUserRole(), ' AppRole', AppRoles.AUTHOR)
+
   }
 
   confirmDialog(post: PostModel): void {
@@ -49,6 +53,11 @@ export class PostListComponent implements OnInit {
         })
       }
     });
+  }
+
+
+  getImage(image) {
+    return this.sanitizer.bypassSecurityTrustUrl('data:image/png;base64,'+image);
   }
 }
 

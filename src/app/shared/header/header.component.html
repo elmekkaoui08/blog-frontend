@@ -54,7 +54,8 @@
     </div>
     <div class="col-4 d-flex justify-content-end align-items-center">
       <a class="btn btn-sm btn-outline-secondary" [routerLink]="'/auth/sign-in'" *ngIf="!authService.isUserLoggedIn()">Sign in</a>
-      <a class="btn btn-sm btn-outline-secondary" [routerLink]="dashboard" *ngIf="authService.isUserLoggedIn()">Dashboard</a>
+      <a class="btn btn-sm btn-outline-secondary" (click)="onNavigateUser()" *ngIf="authService.isUserLoggedIn()">
+        {{authService.getConnectedUser().role.role_id == 3 ? 'Sign out':'Dashboard'}}</a>
     </div>
   </div>
 </header>
