@@ -12,10 +12,10 @@
     </div>
   </div>
   <div class="mb-3">
-    <label for="image" class="form-label">Image (URL)</label>
-    <input type="text" class="form-control" id="image" formControlName="image"
-           [ngClass]="{'is-invalid': image.invalid && (image.touched || image.dirty || isSubmitted)}">
-    <div class="invalid-feedback" *ngIf="image.invalid && (image.touched || image.dirty || isSubmitted)">
+    <label for="image_name" class="form-label">Image </label>
+    <input type="file" class="form-control" id="image_name" formControlName="image_name" (change)="handleFileSelect($event)"
+           [ngClass]="{'is-invalid': image_name.invalid && (image_name.touched || image_name.dirty || isSubmitted)}">
+    <div class="invalid-feedback" *ngIf="image_name.invalid && (image_name.touched || image_name.dirty || isSubmitted)">
       Post image is required !
     </div>
   </div>
@@ -32,7 +32,7 @@
   </div>
   <div class="mb-3">
     <label for="content" class="form-label">Post content</label>
-    <textarea  class="form-control"  id="content" formControlName="content"
+    <textarea  class="form-control" rows="6"  id="content" formControlName="content"
                [ngClass]="{'is-invalid': content.invalid && (content.touched || content.dirty || isSubmitted)}">
     </textarea>
     <div class="invalid-feedback" *ngIf="content.invalid && (content.touched || content.dirty || isSubmitted)">
